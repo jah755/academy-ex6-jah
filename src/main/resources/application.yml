@@ -1,0 +1,27 @@
+# tries to get SPRING_PROFILES_ACTIVE from environment variables if exists, if not defaults to local
+environment: ${SPRING_PROFILES_ACTIVE:local}
+
+# overrides the default 8080 port
+server:
+  port : 8088
+
+spring:
+  application:
+    name: cnap-examples-spring-boot-rest-kafka-json-service
+  kafka:
+    # replicas define how many copies of each partition there will be. 1 means there will be a partition, but it will not be replicated.
+    replicas: 1
+    #    defines how many partitions will a given topic have.
+    #
+    #    "Each partition is an ordered, immutable sequence of messages that is continually appended to—a commit log.
+    #    The messages in the partitions are each assigned a sequential id number called the offset that uniquely identifies each message within the partition."
+    #    https://kafka.apache.org/081/documentation/#ops
+    partitions: 1
+    bootstrap:
+      # url of 1 or more of our brokers, best to give more than 1 in case of some broker failure
+     servers: "localhost:9092"
+
+# swagger documentation will be available at http://localhost:8088/swagger-ui/index.html, when app is running
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
